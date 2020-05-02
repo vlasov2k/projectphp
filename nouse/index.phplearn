@@ -1,0 +1,212 @@
+<meta charset="utf-8">
+
+<?php
+echo 'hello world<br>';
+
+error_reporting(E_ALL);
+
+$x = 10;
+$y = 11;
+
+function test() {
+    //глобальные переменные внутри функции
+    global $x, $y;
+    echo $x . ' ' . $y . '<br>';
+    //static сохраняет значение переменной
+    static $z;
+    $z++;
+    echo $z . '<br>';
+}
+
+test();
+test();
+
+// массив, хранящий глобольные переменные
+echo $GLOBALS ['x'] . '<br>';
+
+print_r ($GLOBALS);
+
+echo '<br>';
+
+$var_1 = 'var1';
+$var_2 = 'var2';
+
+$array = array('key' => 'value');
+
+echo("value of array: {$array['key']}<br>");
+
+print("value of array: {$array['key']}");
+
+echo'<br>'
+
+?>
+
+<?php if ($expression == true): ?>
+    Это будет отображено, если выражение истинно.
+  <?php else: ?>
+    В ином случае будет отображено это.<br>
+  <?php endif; ?>
+  
+
+<?
+// Замечание: Если вы желаете проверить тип и значение определённого выражения, 
+// используйте var_dump().
+
+// Если же вам для отладки необходимо просто 
+// удобочитаемое представление типа, используйте gettype(). 
+// Чтобы проверить на определенный тип, 
+// не используйте gettype(), 
+// применяйте для этого функции is_type.
+
+
+<?php
+$a_bool = TRUE;   // логический
+$a_str  = "foo";  // строковый
+$a_str2 = 'foo';  // строковый
+$an_int = 12;     // целочисленный
+
+echo gettype($a_bool); // выводит: boolean
+echo gettype($a_str);  // выводит: string
+
+// Если это целое, увеличить на четыре
+if (is_int($an_int)) {
+    $an_int += 4;
+}
+
+// Если $a_bool - это строка, вывести ее
+// (ничего не выводит)
+if (is_string($a_bool)) {
+    echo "Строка: $a_bool";
+}
+?>
+
+
+
+<?php
+//Булев
+
+
+// == это оператор, который проверяет
+// эквивалентность и возвращает boolean
+if ($action == "show_version") {
+    echo "Версия 1.23";
+}
+
+// это необязательно...
+if ($show_separators == TRUE) {
+    echo "<hr>\n";
+}
+
+// ... потому что следующее имеет тот же самый смысл:
+if ($show_separators) {
+    echo "<hr>\n";
+}
+?>
+
+
+
+<?php
+//Булев
+var_dump((bool) "");        // bool(false)
+var_dump((bool) 1);         // bool(true)
+var_dump((bool) -2);        // bool(true)
+var_dump((bool) "foo");     // bool(true)
+var_dump((bool) 2.3e5);     // bool(true)
+var_dump((bool) array(12)); // bool(true)
+var_dump((bool) array());   // bool(false)
+var_dump((bool) "false");   // bool(true)
+?>
+
+
+<?php
+//строки
+echo 'это простая строка';
+
+echo 'Также вы можете вставлять в строки
+символ новой строки вот так,
+это нормально';
+
+// Выводит: Однажды Арнольд сказал: "I'll be back"
+echo 'Однажды Арнольд сказал: "I\'ll be back"';
+
+// Выводит: Вы удалили C:\*.*?
+echo 'Вы удалили C:\\*.*?';
+
+// Выводит: Вы удалили C:\*.*?
+echo 'Вы удалили C:\*.*?';
+
+// Выводит: Это не будет развернуто: \n новая строка
+echo 'Это не будет развернуто: \n новая строка';
+
+// Выводит: Переменные $expand также $either не разворачиваются
+echo 'Переменные $expand также $either не разворачиваются';
+?>
+
+
+
+
+<?php
+$juice = "apple";
+
+echo "He drank some $juice juice.".PHP_EOL;
+
+// Некорректно. 's' - верный символ для имени переменной, но переменная имеет имя $juice.
+echo "He drank some juice made of $juices.";
+
+// Корректно. Строго указан конец имени переменной с помощью скобок:
+echo "He drank some juice made of ${juice}s.";
+?>
+
+
+
+<?php
+$array = array(
+    "foo" => "bar",
+    "bar" => "foo",
+    100   => -100,
+    -100  => 100,
+);
+var_dump($array);
+?>
+
+
+
+<?php
+$array = array(
+    "foo" => "bar",
+    42    => 24,
+    "multi" => array(
+         "dimensional" => array(
+             "array" => "foo"
+         )
+    )
+);
+
+var_dump($array["foo"]);
+var_dump($array[42]);
+var_dump($array["multi"]["dimensional"]["array"]);
+?>
+
+
+
+<?php
+// Создаем простой массив.
+$array = array(1, 2, 3, 4, 5);
+print_r($array);
+
+// Теперь удаляем каждый элемент, но сам массив оставляем нетронутым:
+foreach ($array as $i => $value) {
+    unset($array[$i]);
+}
+print_r($array);
+
+// Добавляем элемент (обратите внимание, что новым ключом будет 5, вместо 0).
+$array[] = 6;
+print_r($array);
+
+// Переиндексация:
+$array = array_values($array);
+$array[] = 7;
+print_r($array);
+?>
+
