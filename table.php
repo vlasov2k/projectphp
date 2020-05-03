@@ -1,7 +1,6 @@
 <?php
 // фильтруем данные, полученные из input формы параметров таблицы умножения
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
-        echo "POST";
         $cols = abs ( (int) $_POST['cols'] );
         $rows = abs ( (int) $_POST['rows'] );
         $color = trim ( strip_tags ( $_POST['color'] ) );

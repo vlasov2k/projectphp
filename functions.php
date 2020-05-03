@@ -61,7 +61,14 @@
 
 // функция приветствия с выводом имени и времени суток
     function greeting ( $w="hello", $n ) {
-        echo "<div style='display: flex;justify-content: end;'>$w, $n ";
+        echo "<div 
+            style='
+                display: flex;
+                justify-content: end;
+                display:-webkit-flex;
+                justify-content:flex-end;
+                margin-right:5em;
+                '>$w, $n ";
         echo "<br>today is $GLOBALS[date]</div>"; 
     }
 
