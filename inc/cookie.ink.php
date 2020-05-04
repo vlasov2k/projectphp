@@ -30,5 +30,5 @@ if(date('d-m-Y', $_COOKIE['lastVisit']) != date ('d-m-Y')){
 }
 
 // var_dump(getdate($_COOKIE['lastVisit']));
-// var_dump ($_SERVER["PHP_SELF"]);
+var_dump ($_SERVER["PHP_SELF"]);
 // var_dump ($_COOKIE);

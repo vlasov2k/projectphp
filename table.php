@@ -4,15 +4,14 @@
         $cols = abs ( (int) $_POST['cols'] );
         $rows = abs ( (int) $_POST['rows'] );
         $color = trim ( strip_tags ( $_POST['color'] ) );
-        echo $cols;
     }
 // инициируем параметры для функции, разворачивающей таблицу умножения
     $cols = ($cols) ? $cols: 10;
     $rows = ($rows) ? $rows: 10;
     $color = ($color) ? $color: gray;
 
-    include"test.php";
-    echo $test;
+    // include"test.php";
+    // echo $test;
 ?>
 <!-- форма параметров таблицы умножения -->
     <form action="<?= $_SERVER["REQUEST_URI"]?>" method="POST">

@@ -51,13 +51,14 @@ headerInit($id);
         <?php
             if(!$_COOKIE['name']){
                 $page = $_SERVER['REQUEST_URI'];
+                echo $page;
                 echo "
                 <form action='$page' method='post'>
                     <p>input name
                         <input type='text'name='name'>
-                        <p>
-                            <input type='submit'>
-                        </p>
+                    </p>
+                    <p>
+                        <input type='submit'>
                     </p>
                 </form>
                 ";

@@ -13,7 +13,7 @@
 
     $id = strtolower(clearStr($_GET['id']));
     if (empty($id))
-        $id = "home";
+        $id = "";
 // функция, инициализирующая заголовки страницы
     function headerInit ($id){
         $GLOBALS['title'] = $GLOBALS['header'] = $id;
@@ -74,12 +74,12 @@
 
 // инициализация навигационной панели
     $nav_bar = [ 
-        ["href" => "index.php", "link" => "home" ],
+        ["href" => "index.php?id=home", "link" => "home" ],
         ["href" => "index.php?id=article", "link" => "article"],
         ["href" => "index.php?id=table", "link" => "math table"],
         ["href" => "index.php?id=calculator", "link" => "calculator"],
         ["href" => "index.php?id=navigator", "link" => "navigator"],
-        ["href" => "index.php?id=phpinfo", "link" => "phpinfo"]
+        ["href" => "index.php?id=info", "link" => "phpinfo"]
     ];
 
 // функция динамического отображения навигационной панели
