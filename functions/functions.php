@@ -13,9 +13,10 @@
 
     $id = strtolower(clearStr($_GET['id']));
     if (empty($id))
-        $id = "";
+        $id = "home";
 // функция, инициализирующая заголовки страницы
-    function headerInit ($id){
+    function headerInit ($id)
+    {
         $GLOBALS['title'] = $GLOBALS['header'] = $id;
         
         // switch ($id) {
@@ -60,7 +61,8 @@
     $date = "$day $mon $year<br>$hour:$minute<br>";
 
 // функция приветствия с выводом имени и времени суток
-    function greeting ( $w="hello", $n ) {
+    function greeting ( $w="hello", $n ) 
+    {
         echo "<div 
             style='
                 display: flex;
@@ -77,13 +79,17 @@
         ["href" => "index.php?id=home", "link" => "home" ],
         ["href" => "index.php?id=article", "link" => "article"],
         ["href" => "index.php?id=table", "link" => "math table"],
+        ["href" => "index.php?id=oop", "link" => "oop"],
         ["href" => "index.php?id=calculator", "link" => "calculator"],
-        ["href" => "index.php?id=navigator", "link" => "navigator"],
+        ["href" => "index.php?id=usernotes", "link" => "usernotes"],
+        ["href" => "index.php?id=log", "link" => "log"],
         ["href" => "index.php?id=info", "link" => "phpinfo"]
     ];
 
 // функция динамического отображения навигационной панели
-    function expand_bar ( $arr,  $vertical = false ) {
+    $isVertical = "";
+    function expand_bar ( $arr,  $vertical = false ) 
+    {
         //  ставим значение по умолчанию, если в $vertical пришло не булево  
         // if ( !is_bool ( $vertical ) ) {
         //     $vertical = true;
@@ -110,8 +116,8 @@
     }
 
 // функция динамической отрисовки контента
-    function contentRendering($id){
-
+    function contentRendering($id)
+    {
         include "$id.php";
 
         // switch ($id) {
@@ -135,7 +141,7 @@
 
 
 //функция отрисовки динамической таблицы умножения
-    function math_table ( $cols=10, $rows=10, $color="gray" ) {
+    function math_table ( $cols, $rows, $color ) {
         //x = tr, y = td
         echo "<table border = '1'>";
         for ( $x = 1; $x <= $rows; $x++ ) {

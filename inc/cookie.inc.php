@@ -5,7 +5,7 @@ if($_POST['name']){
     $name = trim ( strip_tags ( $_POST['name'] ) );
     setcookie('name', $name, 0x7fffffff);
     //после получения данных из формы перезагружаем страницу методом GET
-    header("Location: " . $_SERVER["PHP_SELF"]);
+    header("Location: " . $_SERVER["REQUEST_URI"]);
     exit;
 }
 $name = ($_COOKIE['name'])? $_COOKIE['name'] : 'guest';
@@ -30,5 +30,5 @@ if(date('d-m-Y', $_COOKIE['lastVisit']) != date ('d-m-Y')){
 }
 
 // var_dump(getdate($_COOKIE['lastVisit']));
-var_dump ($_SERVER["PHP_SELF"]);
+// var_dump ($_SERVER["PHP_SELF"]);
 // var_dump ($_COOKIE);

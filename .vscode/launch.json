@@ -8,7 +8,9 @@
             "name": "Listen for XDebug",
             "type": "php",
             "request": "launch",
-            "port": 9000
+            "program": "${file}",
+            "cwd": "${fileDirname}",
+            "port": 9000,
         },
         {
             "name": "Launch currently open script",

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<catalog>
+
+    <book>
+        <author>Alex Homer</author>
+        <title>XML and IE5</title>
+        <pubyear>2000</pubyear>
+        <price>200</price>
+    </book>
+
+    <book>
+        <author>Alex Homer</author>
+        <title>Dinamic HTML</title>
+        <pubyear>2004</pubyear>
+        <price>120</price>
+    </book>
+
+        <book>
+        <author>Алексей Валиков</author>
+        <title>Технология XSLT</title>
+        <pubyear>2005</pubyear>
+        <price>170</price>
+    </book>
+
+
+</catalog>

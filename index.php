@@ -1,8 +1,14 @@
 <?php
 //подключаем cookie
-include_once "inc/cookie.ink.php";
+include_once "inc/cookie.inc.php";
 //подключаем функции
-include_once "functions.php";
+include_once "functions/functions.php";
+//подключаем логгирование
+const PATH_LOG = "./logs/path.log";
+include "inc/logging.php";
+
+//че тут непонятного, чтоб не лезть в реестр тут прописал
+ini_set ('display_errors', '1');
 
 
 //инициализируем заголовки страницы
@@ -70,8 +76,8 @@ headerInit($id);
         contentRendering($id);
     ?>   
 <!-- нижняя часть страницы -->
-   <footer style='text-align:center;'>
-        <?= $year ?>  
+   <footer style='position:absolute;bottom:2em;display:flex;'>
+        <p stile='justify-content:center;'><?= $year?></p>  
     </footer> 
 </body>
 </html>
