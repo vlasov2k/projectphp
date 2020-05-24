@@ -1,2 +1,1 @@
-#использование DOM
-
+#SPL - Standart PHP Library

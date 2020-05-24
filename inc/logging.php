@@ -14,7 +14,7 @@ $ref = substr ($ref, 3);
 
 $path = "$dt|$ref|$page\n";
 
-file_put_contents (PATH_LOG, $path, FILE_APPEND);
+// file_put_contents (PATH_LOG, $path, FILE_APPEND);
 
 
 

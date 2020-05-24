@@ -1,5 +1,5 @@
 <?php
-// use DbException;
+use DbException;
 require "INewsDB.class.php";
 
 class NewsDB implements INewsDB

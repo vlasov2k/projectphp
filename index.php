@@ -76,7 +76,7 @@ headerInit($id);
         contentRendering($id);
     ?>   
 <!-- нижняя часть страницы -->
-   <footer style='position:absolute;bottom:2em;display:flex;'>
+   <footer style='bottom:2em;display:flex;'>
         <p stile='justify-content:center;'><?= $year?></p>  
     </footer> 
 </body>

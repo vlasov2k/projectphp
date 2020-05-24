@@ -4,6 +4,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $cols = abs ( (int) $_POST['cols'] );
     $rows = abs ( (int) $_POST['rows'] );
     $color = trim ( strip_tags ( $_POST['color'] ) );
+    var_dump($GLOBALS) ;
 }
 // инициируем параметры для функции, разворачивающей таблицу умножения
 $cols = $cols ?? 10;

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions name='Stock'
+    targetNamespace='http://projectphp.loc/demo/soap/stock.wsdl'
+    xmlns:tns='http://projectphp.loc/demo/soap/stock.wsdl'
+    xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/'
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+    xmlns:xsd='http://www.w3.org/2001/XMLSchema'
+    xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/'
+    xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'
+    xmlns='http://schemas.xmlsoap.org/wsdl/'>
+
+    <message name="getStockRequest">
+        <part name="id" type="xsd:string" />
+    </message>
+
+    <message name="getStockResponse">
+        <part name="result" type="xsd:integer" />
+    </message>
+
+    <portType name="StockPortType">
+        <operation name="getStock">
+            <input message="tns:getStockRequest" />
+            <output message="tns:getStockResponse" />
+        </operation>
+    </portType>
+
+    <binding name="StockBinding" type="tns:StockPortType">
+        <soap:binding style="rpc" transport=
+            "http://schemas.xmlsoap.org/soap/http" />
+        <operation name="getStock" />
+    </binding>
+
+    <service name="StockService">
+        <port name="StockPort" binding="StockBinding">
+            <soap:address location=
+                "http://projectphp.loc/demo/soap/server.php" />
+        </port>
+    </service>
+
+</definitions>

@@ -2,9 +2,10 @@
 
 ini_set ("display_errors", 1);
 
-const RSS_URL = "http://projectphp.loc/enews/rss.xml";
+const RSS_URL = "http://projectphp.loc/demo/enews/rss.xml";
 
 const XML_FILE_NAME = "news.xml";
+//Time To Leave
 const RSS_TTL = 3600;
 
 function download ($url, $filename)
@@ -17,7 +18,9 @@ function download ($url, $filename)
 if (!is_file (XML_FILE_NAME)) {
     download (RSS_URL, XML_FILE_NAME);
 }
-
+// echo date("d-m-Y H:i:s",filemtime (XML_FILE_NAME)) . " время модификации<br>";
+// echo date("d-m-Y H:i:s",filemtime (XML_FILE_NAME)+ RSS_TTL) . " время следующей модификации<br>";
+// echo date("d-m-Y H:i:s",time());
 ?>
 
 <!DOCTYPE html>
@@ -42,6 +45,11 @@ if (!is_file (XML_FILE_NAME)) {
                 <a href="{$item->link}">читать дальше</a>
             </p>
         ITEM;
+    }
+    //если текущее время больше чем текущее + RSS_TTL
+    //проверка не закончилось ли время
+    if (time() > filemtime (XML_FILE_NAME) + RSS_TTL) {
+        download (RSS_URL, XML_FILE_NAME);
     }
     ?>
 </body>
