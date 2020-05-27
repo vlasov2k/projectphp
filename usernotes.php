@@ -1,7 +1,4 @@
 <?php
-echo "home sweet some<br>";
-?>
-<?php
 //соединеняемся с базой данных и отслеживаем ошибки при соединении
 const DB_HOST = 'localhost';
 const DB_LOGIN = 'master';
@@ -10,12 +7,9 @@ const DB_NAME = 'projectphp';
 
 $link = mysqli_connect(DB_HOST, DB_LOGIN, DB_PASSWORD, DB_NAME) or exit (mysqli_connect_error());
 
-    // mysqli_query ($link, "CREATE TABLE IF NOT EXISTS usernotes (
-    //     id int not null auto_increment primary key,
-    //     username varchar (50) not null default '',
-    //     usernote text,
-    //     created_at timestamp default now() 
-    // )") ;
+
+
+
 
 //сохраняем запись в БД
 //проверяем метод запроса
@@ -44,6 +38,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         //ob_start();
 }
 
+
+
+
+
 //удаляем запись из БД
 $usernote_id = null;
 //проверяем пришел ли запрос на удаление записи
@@ -59,8 +57,11 @@ if (isset ($_GET['del']))
         header("Location: " . $_SERVER["HTTP_REFERER"]);
         exit;
     }
-
 ?>
+
+
+
+
 
 <!-- форма  -->
     <form action="<?= $_SERVER["REQUEST_URI"]?>" method="POST">
@@ -69,55 +70,72 @@ if (isset ($_GET['del']))
         <p><input type="submit" /></p>
     </form>
 
+
+
+
+
 <?php
 //выводим записи из базы данных
-
 //формируем запрос к БД
-$query = "SELECT id, username, usernote, created_at
-     FROM usernotes 
-     order by created_at desc";
+// $query = "SELECT id, username, usernote, created_at
+//      FROM usernotes 
+//      order by created_at desc";
+
+$query = "SELECT id
+FROM usernotes 
+order by created_at desc";
+
 //получаем таблицу
 $usernotes = mysqli_query ($link, $query);
 
 //устанавливаем количество записей на странице
 $rows_per_page = 2;
 //устанавливаем количество ссылок
-$page_links = 5;
-
-if (!isset($_GET['page'])) {
-    $_GET['page'] = 1;
-}
-
-$page_id = $_GET['page'];
-
+$page_links = 2;
+$page_id = $_GET['page'] ?? 1;
 //подсчитываем кол-во строк
 $rows_coutn = mysqli_num_rows($usernotes);
-// echo "rows_coutn: " . $rows_coutn . "<br>";
-
 //подсчитываем кол-во страниц
 $page_count = ceil($rows_coutn/$rows_per_page);
-// echo "page_count: " . $page_count . "<br>";
-
+$offset = ($page_id * $rows_per_page) - $rows_per_page;
+(string)$result = "";
 // or (!is_int($page_id)
 if($page_id > $page_count or $page_id < 1) {
     $page_id = 1;
 }
 
-echo "<h3>page_id: " . $page_id . "</h3><br>";
+//вывод через LimitIterator
+// $usernote = mysqli_fetch_all ($usernotes, MYSQLI_ASSOC);
+// $it = new ArrayIterator ($usernote );
+// foreach (new LimitIterator($it, $offset, $rows_per_page) as $lit) {
+//     //фильтр 
+//     $note = nl2br($lit['usernote']);
 
-$offset = --$page_id * $rows_per_page;
-// echo "offset: " . $offset . "<br>";
+//     $result .=<<<NOTE
+//     {$lit['id']}
+//     <p margin='15em'>$lit[username] написал:<br>
+//         $note<br>
+//         $lit[created_at]
+//     </p>
+//     <p align="right" border='1px'>
+//         <a href="$_SERVER[REQUEST_URI]&del={$lit['id']}">
+//         удалить</a>
+//     </p>
+//     <hr>
+//     NOTE;
+// }
+// echo "<h3>page_id: " . $page_id . "</h3><br>";
+// echo $result;
 
+//вывод через второй запрос
 $query = "SELECT id, username, usernote, created_at
     FROM usernotes 
     order by created_at desc
     LIMIT $rows_per_page OFFSET $offset
     ";
-
 $usernotes = mysqli_query($link,$query);
 
 (string)$result = "";
-
 //распаковываем таблицу построчно
 while ($usernote = mysqli_fetch_array ($usernotes, MYSQLI_ASSOC)) {
     //фильтр 
@@ -136,27 +154,27 @@ while ($usernote = mysqli_fetch_array ($usernotes, MYSQLI_ASSOC)) {
     <hr>
     NOTE;
 }
+echo "<h3>page_id: " . $page_id . "</h3><br>";
 echo $result;
 
-//links
 
-if ($page_id >= 1) {
+//links
+echo '<div align="center">';
+if ($page_id > 1) {
     //<<
     echo '<a href="index.php?id=usernotes&page=1"><<</a> &nbsp; ';
-    echo "<a href='index.php?id=usernotes&page=$page_id'> <</a> &nbsp; ";
+    echo '<a href="index.php?id=usernotes&page=' . ($page_id-1) . '"> <</a> &nbsp; ';
 }
-$current_page_id = $page_id+1;
-$start = $current_page_id-$page_count;
-$end = $current_page_id+$page_count;
+
+$start = $page_id - $page_links;
+$end = $page_id + $page_links;
 
 for ($link_id = 1; $link_id <= $page_count; $link_id++) {
-
     // Выводим ссылки только в том случае, если их номер больше или равен
     // начальному значению, и меньше или равен конечному значению
     if ($link_id>=$start && $link_id<=$end) {
-
         // Ссылка на текущую страницу выделяется жирным
-        if ($link_id==($page_id+1)) {
+        if ($link_id==($page_id)) {
             echo '<a href="index.php?id=usernotes&page=' . $link_id . '"><strong style="color: #df0000">' . $link_id . '</strong></a> &nbsp; ';
     } else {
             // Ссылки на остальные страницы
@@ -165,13 +183,66 @@ for ($link_id = 1; $link_id <= $page_count; $link_id++) {
     }
 }
 
-if ($link_id>$page_id && ($page_id+2)<$link_id) {
+if ($link_id>$page_id && ($page_id+1)<$link_id) {
+    echo '<a href="index.php?id=usernotes&page=' . ($page_id+1) .'"> ></a> &nbsp; ';
+    echo '<a href="index.php?id=usernotes&page=' . $page_count . '">>></a> &nbsp; ';
+}
+echo '</div>';
+
+// mysqli_query ($link, "CREATE TABLE IF NOT EXISTS usernotes (
+//     id int not null auto_increment primary key,
+//     username varchar (50) not null default '',
+//     usernote text,
+//     created_at timestamp default now() 
+// )") ;
+
+// echo "offset: " . $offset . "<br>";
+// echo "rows_coutn: " . $rows_coutn . "<br>";
+
+// echo "page_count: " . $page_count . "<br>";
+// $current_page_id = $page_id+1;
+// $start = $current_page_id-$page_count;
+// $end = $current_page_id+$page_count;
 
     // Чтобы попасть на следующую страницу нужно увеличить $pages на 2
-    echo '<a href="index.php?id=usernotes&page=' . ($page_id+2) .'"> ></a> &nbsp; ';
+// $offset = --$page_id * $rows_per_page;
+    // echo '<a href="index.php?id=usernotes&page=' . ($link_id-1) . '">>></a> &nbsp; ';
 
-    // Так как у нас $link_id = количество страниц + 1, то теперь 
-    // уменьшаем его на единицу и получаем ссылку на последнюю страницу
-    echo '<a href="index.php?id=usernotes&page=' . ($link_id-1) . 
-    '">>></a> &nbsp; ';
-}
+    // if (!isset($_GET['page'])) {
+//     $_GET['page'] = 1;
+// }
+
+//ссылки на страницы
+// $pagesCount = ceil($countAll/$limit);
+// for($i = 1; $i <= $pagesCount; $i++){
+//   echo '<a href = "index.php?p_id='.$i.'">'.$i.'</a>';
+// }
+
+// $query = "SELECT id, username, usernote, created_at
+//     FROM usernotes 
+//     order by created_at desc
+//     LIMIT $rows_per_page OFFSET $offset
+//     ";
+// $usernotes = mysqli_query($link,$query);
+
+// (string)$result = "";
+// //распаковываем таблицу построчно
+// while ($usernote = mysqli_fetch_array ($usernotes, MYSQLI_ASSOC)) {
+//     //фильтр 
+//     $note = nl2br($usernote['usernote']);
+
+//     $result .=<<<NOTE
+//     {$usernote['id']}
+//     <p margin='15em'>$usernote[username] написал:<br>
+//         $note<br>
+//         $usernote[created_at]
+//     </p>
+//     <p align="right" border='1px'>
+//         <a href="$_SERVER[REQUEST_URI]&del={$usernote['id']}">
+//         удалить</a>
+//     </p>
+//     <hr>
+//     NOTE;
+// }
+// echo "<h3>page_id: " . $page_id . "</h3><br>";
+// echo $result;

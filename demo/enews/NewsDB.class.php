@@ -2,7 +2,7 @@
 use DbException;
 require "INewsDB.class.php";
 
-class NewsDB implements INewsDB
+class NewsDB implements INewsDB, IteratorAggregate
 {
 
     const DB_HOST = "localhost";
@@ -17,18 +17,23 @@ class NewsDB implements INewsDB
     const RSS_LINK = "http://projectphp/enews/news.php";
 
     private $_db;
+    private $_items;
 
     // SQLite3
     // const DB_NAME = "../news.db";
 
     function __construct()
     {
-        //     $this->_db = new SQLite3(self::DB_NAME);
+        // $this->_db = new SQLite3(self::DB_NAME);
+
         $this->_db = new mysqli(
             self::DB_HOST, 
             self::DB_LOGIN, 
             self::DB_PASSWORD, 
         );
+
+        // $this->_db = new PDO ('mysql:host=localhost;dbname=dbname', 'user', 'password');
+
         if ($this->_db->connect_error){
             $error = "{$this->_db->connect_errno}: {$this->_db->connect_error}";
             exit ($error);
@@ -43,7 +48,6 @@ class NewsDB implements INewsDB
             }
             $this->_db->select_db(self::DB_NAME);
     
-
             //создаем таблицу msgs
             $query = "CREATE TABLE IF NOT EXISTS msgs (
                     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -78,8 +82,8 @@ class NewsDB implements INewsDB
        } catch (DbException $error) {
             exit ($error->getMessage());
        }
+       $this->getCategories();
     }
-
     function __destruct()
     {
         // unset ($this->_db);
@@ -141,6 +145,21 @@ class NewsDB implements INewsDB
         $msgs = $this->_db->query($query);
         return $this->db2arr($msgs);
     }
+
+    //
+    private function getCategories ()
+    {
+        $sql = "SELECT id, name FROM category";
+        $result = $this->_db->query ($sql);
+        while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+            $this->_items[$row['id']] = $row['name'];
+        }
+    }
+    function getIterator()
+    {
+        return new ArrayIterator($this->_items);
+    }
+
     function deleteNews ($id)
     {
         $query = "DELETE FROM msgs WHERE id = $id";

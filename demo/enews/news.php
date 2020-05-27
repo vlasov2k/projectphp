@@ -32,9 +32,14 @@ echo $errMsg;
 <form action="<?= $_SERVER["PHP_SELF"]?>" method="POST">
     выберите категорию: <br>
     <select name="category">
-        <option value="1">политика</option>
+        <!-- <option value="1">политика</option>
         <option value="2">культура</option>
-        <option value="3">спорт</option>
+        <option value="3">спорт</option> -->
+        <?php
+        foreach ($news as $value => $name) {
+            echo "<option value='$value'>$name</option>";
+        }
+        ?>
     </select><br>
     <p>Заголовок новости: <br><textarea name="title" cols="50" ></textarea></p>
     <p>текст новости:   <br><textarea name="description" cols="50" rows="15"></textarea></p>
