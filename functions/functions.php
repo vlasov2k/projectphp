@@ -75,6 +75,39 @@
     }
 
 // инициализация навигационной панели
+
+//TODO Посмотреть пример роутинга
+    $allowedRoutes = [
+        'forum' => [
+            'controller' => ForumController::class,
+            'sub_resources' => [
+                '/' => 'index',
+                '/edit' => 'change' // где доп.слаг соответствует какому то методу контроллера
+            ]
+        ],
+        'home' => [
+            'controller' => HomeController::class,
+            'sub_resources' => [
+                '/' => 'index',
+                '/out' => 'out',
+                '/changePassword' => 'editPassword'
+            ]
+        ],
+    ];
+
+    $url = '/forum/page1.html';
+
+    $urlAsArray = explode('/', $url);
+    $firstSlag = current(reset($urlAsArray));
+
+    if ($allowedRoutes[$firstSlag]) {
+        return (new $allowedRoutes[$firstSlag])->;
+    } else {
+        throw new \Exception('Resource doesn\'t exist');
+    }
+
+
+
     $nav_bar = [ 
         ["href" => "index.php?id=home", "link" => "home" ],
         ["href" => "index.php?id=article", "link" => "article"],
