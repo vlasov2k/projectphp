@@ -1,4 +1,5 @@
 <?php
+// include 'vendor/autoload.php';
 //подключаем cookie
 include_once "inc/cookie.inc.php";
 //подключаем функции
