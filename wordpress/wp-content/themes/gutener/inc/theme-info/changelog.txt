@@ -1,0 +1,10 @@
+= 1.0.2 =
+* Theme info added.
+* Style updated.
+
+= 1.0.1 =
+* Minor functional issues fixed.
+* Style updated.
+
+= 1.0.0 =
+* Initial release.
