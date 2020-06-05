@@ -182,6 +182,63 @@ get_header();
 
       <div class="blog-entries">
 
+          <?php
+
+          $args = array (
+              'numberposts' => 3,
+              'post_type'   => 'post',
+              'suppress_filters' => true, // подавление работы фильтров изменения SQL запроса
+          );
+
+          $posts = get_posts ($args);
+
+          foreach( $posts as $post ) {
+              setup_postdata($post);
+
+//              var_dump(the_excerpt());
+
+              ?>
+              <article class="row entry">
+
+                  <div class="entry-header">
+
+                      <div class="permalink">
+                          <a href="<?php the_permalink() ?>"><i class="fa fa-link"></i></a>
+                      </div>
+
+                      <div class="ten columns entry-title pull-right">
+                          <h3><a href="<?php the_permalink() ?>"><?php the_title() ?></a></h3>
+                      </div>
+
+                      <div class="two columns post-meta end">
+                          <p>
+                              <time datetime="2014-01-31" class="post-date" pubdate=""><?php the_time('F jS, Y') ?></time>
+                              <span class="dauthor">by <?php the_author() ?></span>
+                          </p>
+                      </div>
+
+                  </div>
+
+                  <div class="ten columns offset-2 post-content">
+                      <p><?php do_action('excerpt_home'); ?><a class="more-link" href="<?php the_permalink() ?>">Read More<i class="fa fa-arrow-circle-o-right"></i></a></p>
+                  </div>
+
+              </article> <!-- Entry End -->
+
+              <div class="block">
+
+
+
+              </div>
+
+              <?php
+              // формат вывода the_title() ...
+          }
+
+          wp_reset_postdata(); // сброс
+
+          ?>
+
          <!-- Entry -->
          <article class="row entry">
 

@@ -11,7 +11,7 @@
                 'theme_location' => 'Footer Menu',
                 'container' => null,
                 'menu_class' => 'footer-nav',
-                'menu_id' => 'footer-nav'
+                'menu_id' => 'footer-nav',
             ));
             ?>
 
