@@ -5,16 +5,48 @@ add_action ('wp_footer', 'script_theme');
 add_action ('after_setup_theme', 'theme_register_nav_menu_and_features');
 add_action ('widgets_init', 'register_my_widgets');
 
-add_action ('excerpt_categories', 'excerpt_categories');
+//excerpt фильтры
+add_action ('excerpt_categories', 'excerpt_categories', 1);
 add_action ('excerpt_home', 'excerpt_home');
-// добавляет ссылку на пост в конце отрывка
-//add_filter ('excerpt_more', 'new_excerpt_more');
+// хз как но если выключить то при выборе категории не будет срабатывать excerpt_categories
+add_filter ('excerpt_more', 'new_excerpt_more');
 
 // удаляет H2 из шаблона пагинации
 add_filter('navigation_markup_template', 'my_navigation_template', 10);
 
 add_filter ('document_title_separator', 'document_title_separator_filter');
 
+//тестовый фильтр контента
+//add_filter ('the_content', 'test_content');
+//function test_content ($content)
+//{
+//    $content .= "thanks for watching";
+//    return $content;
+//}
+
+//add_action ('my_action', 'action_function');
+//function action_function()
+//{
+//    echo 'me here';
+//}
+
+//add_shortcode ('my_shortcode', 'my_shortcode_function');
+//function my_shortcode_function()
+//{
+//    return 'my_shortcode_function';
+//}
+
+function Generate_iframe( $atts ) {
+    $atts = shortcode_atts( array(
+        'href'   => 'https://wp-kama.ru/',
+        'height' => '550px',
+        'width'  => '280px',
+    ), $atts );
+
+    return '<iframe src="'. $atts['href'] .'" width="'. $atts['width'] .'" height="'. $atts['height'] .'"> <p>Your Browser does not support Iframes.</p></iframe>';
+}
+add_shortcode('iframe', 'Generate_iframe');
+// использование: [iframe href="http://www.exmaple.com" height="480" width="640"]
 
 function register_my_widgets ()
 {
@@ -46,6 +78,7 @@ function theme_register_nav_menu_and_features ()
     register_nav_menu ('Footer Menu', 'Footer Menu');
     add_theme_support ('title-tag');
     add_theme_support ('post-thumbnails', array( 'post' ) );
+    add_theme_support( 'post-formats', array( 'aside', 'gallery', 'video' ) );
     add_image_size ('post_thumb', 1300, 500, true);
 }
 
@@ -78,6 +111,7 @@ function script_theme()
 
 }
 
+// function new_excerpt_more ()
 function new_categories_excerpt_more ()
 {
     global $post;
@@ -86,12 +120,11 @@ function new_categories_excerpt_more ()
 
 function excerpt_categories ()
 {
-    echo "my excerpt_categories hook";
+//    echo "my excerpt_categories hook";
 
     the_excerpt();
 
     add_action ('excerpt_more', 'new_categories_excerpt_more');
-
 }
 
 function new_home_excerpt_more ()

@@ -10,7 +10,7 @@ get_header();
     <div class="row">
 
         <div class="ten columns centered text-center">
-            <h1>categories<span>.</span></h1>
+            <h1>category.php / categories<span>.</span></h1>
 
             <p>Aenean condimentum, lacus sit amet luctus lobortis, dolores et quas molestias excepturi
                 enim tellus ultrices elit, amet consequat enim elit noneas sit amet luctu. </p>
@@ -30,53 +30,49 @@ get_header();
 
             <?php
 
-            if (have_posts()) { while (have_posts()) { the_post();
+            if (have_posts()) {
+
+                while (have_posts()) { the_post();
 
             ?>
 
-            <article class="post">
+                    <article class="post">
 
-                <div class="entry-header cf">
+                        <div class="entry-header cf">
 
-                    <h1><a href="<?php the_permalink() ?>" title=""><?php the_title() ?></a></h1>
+                            <h1><a href="<?php the_permalink() ?>" title=""><?php the_title() ?></a></h1>
 
-                    <p class="post-meta">
+                            <p class="post-meta">
 
-                        <time class="date" datetime="2014-01-14T11:24"><?php the_time('F jS, Y') ?></time>
-                        /
-                        <span class="categories">
+                                <time class="date" datetime="2014-01-14T11:24"><?php the_time('F jS, Y') ?></time>
+                                /
+                                <span class="categories">
 
-                            <?php the_category( ' / ') ?>
+                                    <?php the_category( ' / ') ?>
 
-                            <?php the_tags ( ' #', ' #') ?>
+                                    <?php the_tags ( ' #', ' #') ?>
 
-                        </span>
+                                </span>
 
-                    </p>
+                            </p>
 
-                </div>
+                        </div>
 
-<!--                --><?php
-//                if (has_post_thumbnail()) {
-//                    the_post_thumbnail();
-//                }
-//                ?>
+                        <div class="post-thumb">
+                            <a href="<?php the_permalink() ?>" title=""><?php the_post_thumbnail('post_thumb') ?></a>
+                        </div>
 
-                <div class="post-thumb">
-                    <a href="<?php the_permalink() ?>" title=""><?php the_post_thumbnail('post_thumb') ?></a>
-                </div>
+                        <div class="post-content">
 
-                <div class="post-content">
+                            <p><?php
+                                do_action('excerpt_categories');
+                                //the_excerpt();
+                                ?>
+                            </p>
 
-                    <p><?php
-                        do_action('excerpt_categories');
-//                        the_excerpt();
-                        ?>
-                    </p>
+                        </div>
 
-                </div>
-
-            </article> <!-- post end -->
+                    </article> <!-- post end -->
 
             <?php
                 } // while end
@@ -87,32 +83,14 @@ get_header();
                 the_posts_pagination();
                 ?>
 
-
-                <!--            <nav class="col full pagination">-->
-                <!--                <ul>-->
-                <!--                    <li><span class="page-numbers prev inactive">Prev</span></li>-->
-                <!--                    <li><span class="page-numbers current">1</span></li>-->
-                <!--                    <li><a href="#" class="page-numbers">2</a></li>-->
-                <!--                    <li><a href="#" class="page-numbers">3</a></li>-->
-                <!--                    <li><a href="#" class="page-numbers">4</a></li>-->
-                <!--                    <li><a href="#" class="page-numbers">5</a></li>-->
-                <!--                    <li><a href="#" class="page-numbers">6</a></li>-->
-                <!--                    <li><a href="#" class="page-numbers">7</a></li>-->
-                <!--                    <li><a href="#" class="page-numbers">8</a></li>-->
-                <!--                    <li><a href="#" class="page-numbers">9</a></li>-->
-                <!--                    <li><a href="#" class="page-numbers next">Next</a></li>-->
-                <!--                </ul>-->
-                <!--            </nav>-->
             <?php
             } // if end
             ?>
 
-
-
-
-
         </div> <!-- Primary End-->
 
+
+        <!-- Sidebar -->
         <div id="secondary" class="four columns end">
 
             <?php

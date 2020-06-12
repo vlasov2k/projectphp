@@ -1,5 +1,6 @@
 <?php
 get_header();
+//get_header ('page'); // get_header ('header-page');
 ?>
     <!-- Intro Section
    ================================================== -->
